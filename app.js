@@ -9,7 +9,7 @@ const authRoute = require('./routes/authRoutes')
 const bodyParser = require("body-parser");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000; // Use Render's PORT or default to 3000 locally
 
 //Middleware
 app.set('view engine','ejs');
