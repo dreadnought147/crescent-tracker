@@ -1,0 +1,55 @@
+<!-- EJS template for the login page -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Login</h1>
+    <% if (error) { %>
+      <p class="error"><%= error %></p>
+    <% } %>
+    <form action="/login" method="POST">
+      <label for="userType">User Type:</label>
+      <select id="userType" name="userType" required>
+        <option value="student">Student</option>
+        <option value="admin">Admin</option>
+      </select>
+      
+      <div id="studentFields">
+        <label for="student_number">Student Number:</label>
+        <input type="text" id="student_number" name="student_number">
+        
+        <label for="room_number">Room Number:</label>
+        <input type="text" id="room_number" name="room_number">
+      </div>
+      
+      <div id="adminFields" style="display: none;">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+      </div>
+      
+      <button type="submit">Login</button>
+    </form>
+  </div>
+  <script>
+    // Show/hide fields based on user type
+    document.getElementById('userType').addEventListener('change', function() {
+      const studentFields = document.getElementById('studentFields');
+      const adminFields = document.getElementById('adminFields');
+      if (this.value === 'student') {
+        studentFields.style.display = 'block';
+        adminFields.style.display = 'none';
+      } else {
+        studentFields.style.display = 'none';
+        adminFields.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>

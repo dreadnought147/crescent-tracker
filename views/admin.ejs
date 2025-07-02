@@ -1,0 +1,92 @@
+<!-- EJS template for the admin dashboard to view and manage issues -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Admin Dashboard</h1>
+    <p><a href="/logout">Logout</a></p>
+    
+    <!-- Filters -->
+    <form action="/admin" method="GET" class="filter-form">
+      <label for="category">Filter by Category:</label>
+      <select id="category" name="category">
+        <option value="">All</option>
+        <option value="Maintenance">Maintenance</option>
+        <option value="Noise">Noise</option>
+        <option value="Cleanliness">Cleanliness</option>
+        <option value="Admin">Admin</option>
+        <option value="Other">Other</option>
+      </select>
+      
+      <label for="urgency">Filter by Urgency:</label>
+      <select id="urgency" name="urgency">
+        <option value="">All</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+      
+      <label for="status">Filter by Status:</label>
+      <select id="status" name="status">
+        <option value="">All</option>
+        <option value="New">New</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Resolved">Resolved</option>
+      </select>
+      
+      <button type="submit">Apply Filters</button>
+    </form>
+    
+    <!-- Export Button -->
+    <a href="/admin/export" class="export-btn">Export to CSV</a>
+    
+    <!-- Issues Table -->
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Room No</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Urgency</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Timestamp</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% issues.forEach(issue => { %>
+          <tr>
+            <td><%= issue.id %></td>
+            <td><%= issue.room_number %></td>
+            <td><%= issue.name || 'Anonymous' %></td>
+            <td><%= issue.category %></td>
+            <td><%= issue.urgency %></td>
+            <td><%= issue.description %></td>
+            <td>
+              <form action="/admin/update-status" method="POST">
+                <input type="hidden" name="id" value="<%= issue.id %>">
+                <select name="status" onchange="this.form.submit()">
+                  <option value="New" <%= issue.status === 'New' ? 'selected' : '' %>>New</option>
+                  <option value="In Progress" <%= issue.status === 'In Progress' ? 'selected' : '' %>>In Progress</option>
+                  <option value="Resolved" <%= issue.status === 'Resolved' ? 'selected' : '' %>>Resolved</option>
+                </select>
+              </form>
+            </td>
+            <td><%= issue.timestamp %></td>
+            <td></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
