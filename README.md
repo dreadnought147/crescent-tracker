@@ -1,6 +1,4 @@
 #still a mvp
-
-# crescent-tracker
 # Smart Issue Flow Tracker
 **[Smart Issue Tracker](https://crescentissue-tracker.onrender.com/login)** 
 
