@@ -57,3 +57,4 @@ git clone <repo-url>
 cd smart-issue-tracker
 npm install
 node app.js
+admin passwod: admin123
